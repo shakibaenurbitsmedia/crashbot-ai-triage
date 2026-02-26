@@ -1,0 +1,51 @@
+{{ (() => {
+  const data = $json.json ?? $json.fields ?? $json;
+
+  return {
+    model: "llama3.1",
+    stream: false,
+    format: "json",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are CrashBot, an expert Android crash analysis assistant.\n\n" +
+          "Return ONLY valid JSON with the following keys:\n" +
+          "- issue_title\n" +
+          "- issue_id\n" +
+          "- device_model\n" +
+          "- os_version\n" +
+          "- app_version\n" +
+          "- occurrences\n" +
+          "- root_cause\n" +
+          "- why_happened\n" +
+          "- possible_fix\n" +
+          "- repro_steps\n" +
+          "- regression_tests\n" +
+          "- confidence\n\n" +
+          "Requirements:\n" +
+          "1. Use the provided crash metadata (issue_id, device_model, os_version, app_version, occurrences).\n" +
+          "2. Analyze the stack trace carefully and infer the most probable root cause.\n" +
+          "3. Avoid generic advice like 'check the file'. Be specific and technical.\n" +
+          "4. Suggest concrete Android/Kotlin fixes when possible.\n" +
+          "5. If Jetpack Compose is involved, mention Compose lifecycle/pointer handling if relevant.\n" +
+          "6. Do NOT include markdown or extra text outside the JSON object.\n" +
+          "7. confidence must be a number between 0 and 1.\n" +
+          "Return strictly valid JSON."
+      },
+      {
+        role: "user",
+        content:
+          "Crash metadata:\n" +
+          "issue_id: " + (data.issue_id ?? "") + "\n" +
+          "issue_title: " + (data.issue_title ?? "") + "\n" +
+          "device_model: " + (data.device_model ?? "") + "\n" +
+          "os_version: " + (data.os_version ?? "") + "\n" +
+          "app_version: " + (data.app_version ?? "") + "\n" +
+          "build_version: " + (data.build_version ?? "") + "\n" +
+          "occurrences: " + (data.event_count ?? data.occurrences ?? "") + "\n\n" +
+          "Stack trace:\n" + (data.sample_stack_trace ?? "")
+      }
+    ]
+  };
+})() }}
