@@ -1,0 +1,31 @@
+🚨 *CrashBot Alert*
+
+━━━━━━━━━━━━━━━━━━
+
+🔥 *Issue:* {{$json.ai.issue_title}}
+🆔 *Issue ID:* {{$json.ai.issue_id}}
+
+📱 *Device:* {{$json.ai.device_model}}
+🤖 *Android:* {{$json.ai.os_version}}
+📦 *App Version:* {{$json.ai.app_version}}
+📊 *Occurrences:* {{$json.ai.occurrences}}
+
+━━━━━━━━━━━━━━━━━━
+
+🧠 *Root Cause*
+{{$json.ai.root_cause}}
+
+📌 *Why It Happened*
+{{$json.ai.why_happened}}
+
+🛠️ *Recommended Fixes*
+• {{$json.ai.possible_fix}}
+
+━━━━━━━━━━━━━━━━━━
+
+🧪 *Reproduction Steps*
+{{$json.ai.repro_steps.split("\n").map(step => "• " + step).join("\n")}}
+
+━━━━━━━━━━━━━━━━━━
+
+🎯 *Confidence:* {{$json.ai.confidence}}
